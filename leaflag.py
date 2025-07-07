@@ -11,8 +11,8 @@ from win32gui import GetForegroundWindow, GetWindowRect, SetWindowPos
 import win32con as wc
 import win32process
 
-RULE_NAME = "Roblox_Block"
-DEFAULT_KEYBIND = "f6"
+RULE_NAME = "roblox_Block"
+DEFAULT_KEYBIND = "F6"
 
 class LeafLag:
     def __init__(self) -> None:
@@ -149,7 +149,7 @@ class LeafLag:
                     rect = GetWindowRect(current_window)
                     _, pid = win32process.GetWindowThreadProcessId(current_window)
                     current_process = psutil.Process(pid)
-                    is_roblox = current_process.name().lower() == 'robloxplayerbeta.exe'
+                    is_roblox = current_process.name().lower() == 'tf_win64.exe'
                     if is_roblox and (previous_rect != rect or previous_active != is_roblox):
                         self.status_window.deiconify()
                         width, height = rect[2] - rect[0], rect[3] - rect[1]
@@ -267,7 +267,7 @@ class LeafLag:
         try:
             roblox_process = next(
                 (proc for proc in psutil.process_iter(['pid', 'name', 'exe'])
-                 if proc.info['name'] == 'RobloxPlayerBeta.exe' and
+                 if proc.info['name'] == 'tf_win64.exe' and
                     proc.info.get('exe', '').lower().find('roblox') != -1),
                 None
             )
@@ -290,7 +290,7 @@ class LeafLag:
         if not self.is_admin():
             self.show_message('Leaf LagSwitch requires administrator privileges to run.')
             sys.exit(1)
-        if not any(proc.info['name'] == 'RobloxPlayerBeta.exe' for proc in psutil.process_iter(['name'])):
+        if not any(proc.info['name'] == 'tf_win64.exe' for proc in psutil.process_iter(['name'])):
             self.show_message('Roblox is not running. Please start Roblox and try again.')
             sys.exit(1)
 
